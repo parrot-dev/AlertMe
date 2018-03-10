@@ -12,7 +12,7 @@ namespace AlertMe
 
         public override string Author { get { return "Parrot"; } }
         public override string Description { get { return "A chat monitor"; } }
-        public override Version Version { get { return new Version(1, 4, 1); } }
+        public override Version Version { get { return new Version(1, 4, 2); } }
         public override string Name { get { return "AlertMe"; } }
 
 

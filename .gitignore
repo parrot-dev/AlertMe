@@ -1,6 +1,11 @@
 obj/
+
 .vs/
+
 bin/
+
 Settings.xml
+
 ChatLog.txt
-*.suo
+*
+.suo
