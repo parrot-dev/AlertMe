@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -28,7 +29,7 @@ namespace AlertMe
         public static class Chat
         {
             public enum Channels {Pm, Fc, Say, Ls, Shout, Gm, Party, Emote}
-            public static readonly string Filepath = (System.Windows.Forms.Application.StartupPath + @"\plugins\AlertMe\ChatLog.txt");
+            public static readonly string Filepath = Settings.PluginRootDir + @"\ChatLog.txt";
             public static void Print(String input)
             {
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -38,6 +39,25 @@ namespace AlertMe
                 }
 
             }
+
+            public static bool CreateLogFile()
+            {
+                if (!File.Exists(Settings.PluginRootDir + @"\ChatLog.txt"))
+                {
+                    Bot.Print("ChatLog.txt is missing, creating a new file", Colors.White);
+                    try
+                    {
+                        Clear();
+                    }
+                    catch (Exception e)
+                    {
+                        Bot.Print("Could not create ChatLog.txt, make sure the plugin is installed in plugins/AlertMe/");
+                        return false;
+                    }
+                }
+                return true;
+            }
+
             public static void PrintMsg(Channels chn, string msg, string author)
             {                
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");

@@ -22,6 +22,10 @@ namespace AlertMe
         {
             try
             {
+                if (!Log.Chat.CreateLogFile())
+                {
+                    throw new Exception("Could not create ChatLog.txt, make sure the plugin is installed in plugins/AlertMe/");
+                }
                 txtLog.Text = File.ReadAllText(Log.Chat.Filepath);
                
                 chkboxIgnoreSelf.Checked = Settings.Current.ignoreSelf;

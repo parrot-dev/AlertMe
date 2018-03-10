@@ -13,7 +13,7 @@ namespace AlertMe
     public static class Settings
     {
         public static Profile Current = new Profile();
-        private static readonly string PluginRootDir = ff14bot.Managers.PluginManager.PluginDirectory + @"\AlertMe";
+        public static readonly string PluginRootDir = ff14bot.Managers.PluginManager.PluginDirectory + @"\AlertMe";
 
         public static bool Save()
         {
