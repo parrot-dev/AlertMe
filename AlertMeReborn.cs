@@ -12,7 +12,7 @@ namespace AlertMe
 
         public override string Author { get { return "Parrot"; } }
         public override string Description { get { return "A chat monitor"; } }
-        public override Version Version { get { return new Version(1, 4, 2); } }
+        public override Version Version { get { return new Version(1, 4, 3); } }
         public override string Name { get { return "AlertMe"; } }
 
 
@@ -301,14 +301,16 @@ namespace AlertMe
         private bool authorCheck(string author)
         {
             if (Settings.Current.ignoreSelf)
+            {
                 return !isAuthorMe(author);
-            else
-                return true;
+            }
+
+            return true;
         }
 
         private bool isAuthorMe(string author)
         {
-            return string.IsNullOrEmpty(author);
+            return author == GameObjectManager.LocalPlayer.Name;
         }
 
         private static class SndPlayer
