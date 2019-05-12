@@ -301,14 +301,16 @@ namespace AlertMe
         private bool authorCheck(string author)
         {
             if (Settings.Current.ignoreSelf)
+            {
                 return !isAuthorMe(author);
-            else
-                return true;
+            }
+
+            return true;
         }
 
         private bool isAuthorMe(string author)
         {
-            return string.IsNullOrEmpty(author);
+            return author == GameObjectManager.LocalPlayer.Name;
         }
 
         private static class SndPlayer
