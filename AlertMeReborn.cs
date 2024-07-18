@@ -4,16 +4,17 @@ using System.Media;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using ff14bot.AClasses;
+#pragma warning disable CA1416
 
 namespace AlertMe
 {
     public class AlertMe : BotPlugin
     {
 
-        public override string Author { get { return "Parrot"; } }
-        public override string Description { get { return "A chat monitor"; } }
-        public override Version Version { get { return new Version(1, 4, 3); } }
-        public override string Name { get { return "AlertMe"; } }
+        public override string Author => "Parrot";
+        public override string Description => "A chat monitor";
+        public override Version Version => new(1, 4, 3);
+        public override string Name => "AlertMe";
 
 
         public override void OnEnabled()
@@ -44,14 +45,10 @@ namespace AlertMe
             GamelogManager.EmoteRecevied -= EmoteReceived;
         }
 
-        public override bool WantButton
-        {
-            get { return true; }
-        }
-        public override string ButtonText
-        {
-            get { return "Settings/Log"; }
-        }
+        public override bool WantButton => true;
+
+        public override string ButtonText => "Settings/Log";
+
         public override void OnButtonPress()
         {
             Settings.Load();

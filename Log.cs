@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+#pragma warning disable CA1416
 
 namespace AlertMe
 {
@@ -17,7 +18,7 @@ namespace AlertMe
         {
             public static void Print(string input, Color col)
             {
-                Logging.Write(col, string.Format("[AlertMe] {0}", input));
+                Logging.Write(col, $"[AlertMe] {input}");
             }
 
             public static void Print(string input)
@@ -65,8 +66,8 @@ namespace AlertMe
 
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(Filepath, true))
                 {
-                    file.WriteLine(string.Format("[{0,-9}]{1,-7} From: {2}", timestamp,'['+chn.ToString()+']', author));
-                    file.WriteLine(string.Format("{0,27}{1}\r\n", "",msg));
+                    file.WriteLine($"[{timestamp,-8}]{'[' + chn.ToString() + ']',-7} From: {author}");
+                    file.WriteLine($"{"Body:", 18}{msg}");
                 }
             }
 

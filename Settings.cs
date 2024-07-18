@@ -142,11 +142,7 @@ namespace AlertMe
 
         public class PushBullet
         {
-            public PushBullet()
-            {
-                Enabled = false;
-            }
-            public bool Enabled;
+            public bool Enabled = false;
             public string Token = "";            
         }
     }

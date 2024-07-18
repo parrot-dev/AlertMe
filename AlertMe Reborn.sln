@@ -1,9 +1,8 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlertMe Reborn", "AlertMe Reborn.csproj", "{3E8FAA22-FA7A-4DD3-A185-12A9D5A8DC08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlertMe Reborn", "AlertMe Reborn.csproj", "{3E8FAA22-FA7A-4DD3-A185-12A9D5A8DC08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +17,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC358790-4869-4A94-8FAC-8C74CF1CA8A6}
 	EndGlobalSection
 EndGlobal

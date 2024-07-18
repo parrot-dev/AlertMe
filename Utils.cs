@@ -8,7 +8,7 @@ namespace AlertMe
 {
     class Utils
     {
-        public static bool isValidRegex(string pattern)
+        public static bool IsValidRegex(string pattern)
         {
             if (string.IsNullOrEmpty(pattern)) return false;
 
