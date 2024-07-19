@@ -13,7 +13,7 @@ namespace AlertMe
 
         public override string Author => "Parrot";
         public override string Description => "A chat monitor";
-        public override Version Version => new(1, 4, 3);
+        public override Version Version => new(1, 5, 0);
         public override string Name => "AlertMe";
 
 
