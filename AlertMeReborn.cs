@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ff14bot.AClasses;
 using ff14bot.Managers;
+using System;
 using System.Media;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using ff14bot.AClasses;
+using System.Windows.Forms;
 #pragma warning disable CA1416
 
 namespace AlertMe
@@ -20,7 +20,7 @@ namespace AlertMe
         public override void OnEnabled()
         {
             Settings.Load();
-            Log.Chat.Print(string.Format("[Date] {0}", DateTime.Now.ToString("dd/MM-yy hh:mm")));
+            Log.Chat.Print($"[Date] {DateTime.Now.ToString("dd/MM-yy hh:mm")}");
 
             GamelogManager.TellRecevied += TellReceived;
             GamelogManager.ShoutRecevied += ShoutReceived;
@@ -67,14 +67,14 @@ namespace AlertMe
                 var msg = e.ChatLogEntry.Contents;
                 var author = e.ChatLogEntry.SenderDisplayName;
 
-                SndPlayer.play("pm.wav");
-                Log.Bot.Print("[PM] message received");
+                SndPlayer.Play("pm.wav");
+                Log.Bot.Info("[PM] message received");
                 Log.Chat.PrintMsg(Log.Chat.Channels.Pm, msg, author);
                 if (Settings.Current.PM.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                 {
                     await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", author, '[' + Log.Chat.Channels.Pm.ToString() + ']', msg)).Push();
-                }                   
-             }
+                }
+            }
         }
 
         private async void ShoutReceived(object sender, ff14bot.Managers.ChatEventArgs e)
@@ -84,17 +84,17 @@ namespace AlertMe
                 var msg = e.ChatLogEntry.Contents;
                 var author = e.ChatLogEntry.SenderDisplayName;
                 bool match = false;
-                if (authorCheck(author))
+                if (AuthorCheck(author))
                 {
                     match = msgMatchesCrit(Settings.Current.Shout, msg);
                     if (match)
                     {
-                        SndPlayer.play("chat.wav");
-                        Log.Bot.Print("[Shout] Message received");
+                        SndPlayer.Play("chat.wav");
+                        Log.Bot.Info("[Shout] Message received");
                         if (Settings.Current.Shout.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                         {
                             await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", author, '[' + Log.Chat.Channels.Shout.ToString() + ']', msg)).Push();
-                        }    
+                        }
                     }
                 }
                 if (match || Settings.Current.chatLog.LogAll)
@@ -111,17 +111,17 @@ namespace AlertMe
                 var msg = e.ChatLogEntry.Contents;
                 var author = e.ChatLogEntry.SenderDisplayName;
                 bool match = false;
-                if (authorCheck(author))
+                if (AuthorCheck(author))
                 {
                     match = msgMatchesCrit(Settings.Current.Party, msg);
                     if (match)
                     {
-                        SndPlayer.play("chat.wav");
-                        Log.Bot.Print("[Party] Message received");
+                        SndPlayer.Play("chat.wav");
+                        Log.Bot.Info("[Party] Message received");
                         if (Settings.Current.Party.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                         {
                             await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", author, '[' + Log.Chat.Channels.Party.ToString() + ']', msg)).Push();
-                        }  
+                        }
                     }
                 }
                 if (match || Settings.Current.chatLog.LogAll)
@@ -138,17 +138,17 @@ namespace AlertMe
                 var msg = e.ChatLogEntry.Contents;
                 var author = e.ChatLogEntry.SenderDisplayName;
                 bool match = false;
-                if (authorCheck(author))
+                if (AuthorCheck(author))
                 {
                     match = msgMatchesCrit(Settings.Current.Linkshell, msg);
                     if (match)
                     {
-                        SndPlayer.play("chat.wav");
-                        Log.Bot.Print("[LS] Message received");
+                        SndPlayer.Play("chat.wav");
+                        Log.Bot.Info("[LS] Message received");
                         if (Settings.Current.Linkshell.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                         {
                             await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", author, '[' + Log.Chat.Channels.Ls.ToString() + ']', msg)).Push();
-                        }  
+                        }
                     }
                 }
                 if (match || Settings.Current.chatLog.LogAll)
@@ -165,17 +165,17 @@ namespace AlertMe
                 var msg = e.ChatLogEntry.Contents;
                 var author = e.ChatLogEntry.SenderDisplayName;
                 bool match = false;
-                if (authorCheck(author))
+                if (AuthorCheck(author))
                 {
                     match = msgMatchesCrit(Settings.Current.Say, msg);
                     if (match)
                     {
-                        SndPlayer.play("chat.wav");
-                        Log.Bot.Print("[Say] Message received");
+                        SndPlayer.Play("chat.wav");
+                        Log.Bot.Info("[Say] Message received");
                         if (Settings.Current.Say.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                         {
                             await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", author, '[' + Log.Chat.Channels.Say.ToString() + ']', msg)).Push();
-                        }  
+                        }
                     }
                 }
                 if (match || Settings.Current.chatLog.LogAll)
@@ -189,35 +189,35 @@ namespace AlertMe
         {
             if (Settings.Current.GM.Enabled)
             {
-                SndPlayer.play("gm.wav");
-                Log.Bot.Print("ATTENTION! A Game Master is contacting you.");
+                SndPlayer.Play("gm.wav");
+                Log.Bot.Info("ATTENTION! A Game Master is contacting you.");
                 Log.Chat.PrintMsg(Log.Chat.Channels.Gm, e.ChatLogEntry.Contents, e.ChatLogEntry.SenderDisplayName);
-                
+
                 if (Settings.Current.GM.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                 {
                     await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", e.ChatLogEntry.SenderDisplayName, '[' + Log.Chat.Channels.Gm.ToString() + ']', e.ChatLogEntry.Contents)).Push();
-                }  
+                }
             }
         }
         private async void FCReceived(object sender, ChatEventArgs e)
-        {            
+        {
             if (Settings.Current.FC.Enabled)
             {
                 var msg = e.ChatLogEntry.Contents;
                 var author = e.ChatLogEntry.SenderDisplayName;
                 bool match = false;
-                if (authorCheck(author))
+                if (AuthorCheck(author))
                 {
                     match = msgMatchesCrit(Settings.Current.FC, msg);
                     if (match)
                     {
-                        SndPlayer.play("chat.wav");
-                        Log.Bot.Print("[FC] Message received");
+                        SndPlayer.Play("chat.wav");
+                        Log.Bot.Info("[FC] Message received");
 
                         if (Settings.Current.FC.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                         {
                             await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", author, '[' + Log.Chat.Channels.Fc.ToString() + ']', msg)).Push();
-                        }  
+                        }
 
                     }
                 }
@@ -236,17 +236,17 @@ namespace AlertMe
                 var msg = e.ChatLogEntry.Contents;
                 var author = e.ChatLogEntry.SenderDisplayName;
                 bool match = false;
-                if (authorCheck(author))
+                if (AuthorCheck(author))
                 {
                     match = msgMatchesCrit(Settings.Current.Emote, msg);
                     if (match)
                     {
-                        SndPlayer.play("emote.wav");
-                        Log.Bot.Print("Emote Received;");
+                        SndPlayer.Play("emote.wav");
+                        Log.Bot.Info("Emote Received;");
                         if (Settings.Current.Emote.PushBulletEnabled && Settings.Current.pushBullet.Enabled)
                         {
                             await new PushBullet.Note("AlertMe", String.Format("From: {0}\r\n{1} {2}", author, '[' + Log.Chat.Channels.Emote.ToString() + ']', msg)).Push();
-                        }  
+                        }
                     }
                 }
                 if (match || Settings.Current.chatLog.LogAll)
@@ -265,7 +265,7 @@ namespace AlertMe
 
             if (cc.UseKeywords)
             {
-                if (stringContainsKeywords(msg, cc.Keywords))
+                if (MessageContainsKeywords(msg, cc.Keywords))
                     return true;
             }
 
@@ -282,7 +282,7 @@ namespace AlertMe
 
 
 
-        private bool stringContainsKeywords(string msg, string[] keywords)
+        private bool MessageContainsKeywords(string msg, string[] keywords)
         {
             if (keywords == null || keywords.Length == 0)
                 return false;
@@ -295,30 +295,33 @@ namespace AlertMe
         }
 
 
-        private bool authorCheck(string author)
+        private bool AuthorCheck(string author)
         {
             if (Settings.Current.ignoreSelf)
             {
-                return !isAuthorMe(author);
+                Log.Bot.Debug("Ignore self is enabled, performing name check on author.");
+                return !AuthorIsLocalPlayer(author);
             }
 
             return true;
         }
 
-        private bool isAuthorMe(string author)
+        private bool AuthorIsLocalPlayer(string author)
         {
-            return author == GameObjectManager.LocalPlayer.Name;
+            bool isLocalPlayer = author == GameObjectManager.LocalPlayer.Name;
+            Log.Bot.Debug($"Author is local player: {isLocalPlayer}");
+            return isLocalPlayer;
         }
 
         private static class SndPlayer
         {
 
-            public static void play(string fileName)
+            public static void Play(string fileName)
             {
                 if (!Settings.Current.sound)
                     return;
 
-                var fullPath = System.Windows.Forms.Application.StartupPath + @"\Plugins\AlertMe\Sounds\" + fileName;
+                var fullPath = Application.StartupPath + @"\Plugins\AlertMe\Sounds\" + fileName;
                 try
                 {
                     SoundPlayer sp = new SoundPlayer();
@@ -328,12 +331,12 @@ namespace AlertMe
                 }
                 catch (Exception e)
                 {
-                    Log.Bot.Print("Error: " + e.Message);
-                    beep();
+                    Log.Bot.Info("Error: " + e.Message);
+                    Beep();
                 }
             }
 
-            public static void beep()
+            private static void Beep()
             {
                 if (!Settings.Current.sound)
                     return;
@@ -343,7 +346,7 @@ namespace AlertMe
                 }
                 catch (Exception ee)
                 {
-                    Log.Bot.Print("Error: Could not play system sound \"beep\"\n" + ee.Message);
+                    Log.Bot.Info("Error: Could not play system sound \"beep\"\n" + ee.Message);
                 }
             }
         }

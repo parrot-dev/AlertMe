@@ -31,7 +31,7 @@ namespace AlertMe
             {
                 if (string.IsNullOrEmpty(token))
                 {
-                    Log.Bot.Print("Pushbullet, missing token.");
+                    Log.Bot.Info("Pushbullet, missing token.");
                     return false;
                 }
 
@@ -43,8 +43,8 @@ namespace AlertMe
                 var response = await httpClient.SendAsync(request);
                 if (!response.IsSuccessStatusCode)
                 {
-                    Log.Bot.Print("Failed sending pushbullet message");
-                    Log.Bot.Print("Status code: " + response.StatusCode.ToString());
+                    Log.Bot.Info("Failed sending pushbullet message");
+                    Log.Bot.Info("Status code: " + response.StatusCode.ToString());
                     return false;
                 }
                 else

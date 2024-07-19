@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Serialization;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace AlertMe
 {
@@ -31,10 +26,10 @@ namespace AlertMe
             }
             catch (Exception e)
             {
-                Log.Bot.Print("Error while saving :\n" + e.Message);
+                Log.Bot.Info("Error while saving :\n" + e.Message);
                 return false;
             }
-            Log.Bot.Print("Saved settings.", Colors.White);
+            Log.Bot.Info("Saved settings.");
             return true;
         }
 
@@ -42,7 +37,7 @@ namespace AlertMe
         {
             if (!CreateSettingsFile())
             {
-                Log.Bot.Print("Could not create Settings.xml. Make sure the plugin installed in plugins/AlertMe/");
+                Log.Bot.Info("Could not create Settings.xml. Make sure the plugin installed in plugins/AlertMe/");
                 Current = new Profile();
                 return false;
             }
@@ -55,12 +50,12 @@ namespace AlertMe
             }
             catch (Exception e)
             {
-                Log.Bot.Print("Failed to load settings :\n" + e.Message);
+                Log.Bot.Info("Failed to load settings :\n" + e.Message);
                 Current = new Profile();
                 return false;
             }
 
-            Log.Bot.Print("Settings loaded", Colors.White);
+            Log.Bot.Info("Settings loaded");
             return true;
 
         }
@@ -69,7 +64,7 @@ namespace AlertMe
         {
             if (!File.Exists(PluginRootDir + @"\Settings.xml"))
             {
-                Log.Bot.Print("Settings.xml is missing, creating a new file.", Colors.White);
+                Log.Bot.Info("Settings.xml is missing, creating a new file.");
                 return Save(new Profile());
             }
             return true;
@@ -90,7 +85,7 @@ namespace AlertMe
             public PushBullet pushBullet;
             public bool sound;
             public bool ignoreSelf;
-            
+
             public Profile()
             {
 
@@ -103,7 +98,7 @@ namespace AlertMe
                 chatLog = new ChatLog();
                 Shout = new ChatChannel();
                 Say = new ChatChannel();
-                GM = new ChatChannel {PushBulletEnabled = true};
+                GM = new ChatChannel { PushBulletEnabled = true };
                 Party = new ChatChannel();
                 Emote = new ChatChannel();
                 pushBullet = new PushBullet();
@@ -134,7 +129,7 @@ namespace AlertMe
             public string[] Keywords;
         }
 
-        public class ChatLog 
+        public class ChatLog
         {
             public bool Enabled = true;
             public bool LogAll = true; //log all messages on monitored channels.
@@ -143,7 +138,7 @@ namespace AlertMe
         public class PushBullet
         {
             public bool Enabled = false;
-            public string Token = "";            
+            public string Token = "";
         }
     }
 }

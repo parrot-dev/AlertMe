@@ -24,7 +24,7 @@ namespace AlertMe
                     throw new Exception("Could not create ChatLog.txt, make sure the plugin is installed in plugins/AlertMe/");
                 }
                 txtLog.Text = File.ReadAllText(Log.Chat.Filepath);
-               
+
                 chkboxIgnoreSelf.Checked = Settings.Current.ignoreSelf;
                 checkBox1.Checked = Settings.Current.sound;
                 checkBox3.Checked = Settings.Current.chatLog.LogAll;
@@ -102,7 +102,7 @@ namespace AlertMe
 
         private void checkBox16_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBox16.Checked && checkBox16.Focused)
+            if (checkBox16.Checked && checkBox16.Focused)
             {
                 MessageBox.Show("This option has never been tested, it may or may not work.");
             }
@@ -111,7 +111,7 @@ namespace AlertMe
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var profile = new Settings.Profile();        
+            var profile = new Settings.Profile();
             profile.sound = checkBox1.Checked;
             profile.ignoreSelf = chkboxIgnoreSelf.Checked;
             profile.chatLog.LogAll = checkBox3.Checked;
@@ -127,7 +127,7 @@ namespace AlertMe
             profile.Emote = BuildChatChannel(chkBoxEmote.Checked, chkBoxKeywordEmote.Checked, chkBoxRegexEmote.Checked, chkboxEmotePb.Checked, txtBoxKeywordEmote.Text, txtBoxRegexEmote.Text);
             Settings.Current = profile;
             Settings.Save();
-            RefreshForm();           
+            RefreshForm();
         }
 
         private Settings.ChatChannel BuildChatChannel(bool enabled, bool useKeywords, bool useRegex, bool pushbullet, string keywords, string regex)
@@ -177,11 +177,11 @@ namespace AlertMe
         {
             if (!IsNullOrEmpty(txtBoxPbToken.Text))
             {
-              await new PushBullet.Note("AlertMe Reborn", "Test Message").Push(txtBoxPbToken.Text);
+                await new PushBullet.Note("AlertMe Reborn", "Test Message").Push(txtBoxPbToken.Text);
             }
         }
 
- 
+
 
     }
 }
